@@ -1,0 +1,3 @@
+[submodule "psychopy"]
+	path = psychopy
+	url = git@github.com:psychopy/psychopy.git

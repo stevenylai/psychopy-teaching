@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PsychoPy2experiment version="2026.1.0">
+  <Settings>
+    <Param name="expName" val="reaction_time" valType="str"/>
+    <Param name="Full-screen window" val="False" valType="bool"/>
+    <Param name="Window size (pixels)" val="[1024, 768]" valType="list"/>
+  </Settings>
+  <Routines>
+    <Routine name="welcome">
+      <RoutineSettingsComponent name="welcome" plugin="None">
+        <Param name="name" val="welcome" valType="code"/>
+      </RoutineSettingsComponent>
+      <TextComponent name="instructions" plugin="None">
+        <Param name="name" val="instructions" valType="code"/>
+        <Param name="text" val="How fast are you?&#10;&#10;A green GO! will appear in the middle of the screen.&#10;Press the SPACE key as soon as you see it.&#10;&#10;You will do it 8 times.&#10;Your average reaction time will be shown in the end.&#10;&#10;Press SPACE to begin." valType="str"/>
+        <Param name="letterHeight" val="0.08" valType="num"/>
+        <Param name="startVal" val="0" valType="code"/>
+        <Param name="stopType" val="duration (s)" valType="str"/>
+        <Param name="stopVal" val="100" valType="code"/>
+        <Param name="startEstim" val="0" valType="code"/>
+        <Param name="durationEstim" val="100" valType="code"/>
+      </TextComponent>
+      <KeyboardComponent name="startKey" plugin="None">
+        <Param name="name" val="startKey" valType="code"/>
+        <Param name="allowedKeys" val="['space']" valType="list"/>
+        <Param name="store" val="nothing" valType="str"/>
+        <Param name="startVal" val="0" valType="code"/>
+        <Param name="stopType" val="duration (s)" valType="str"/>
+        <Param name="stopVal" val="100" valType="code"/>
+        <Param name="forceEndRoutine" val="True" valType="bool"/>
+      </KeyboardComponent>
+    </Routine>
+    <Routine name="trial">
+      <RoutineSettingsComponent name="trial" plugin="None">
+        <Param name="name" val="trial" valType="code"/>
+      </RoutineSettingsComponent>
+      <TextComponent name="fixation" plugin="None">
+        <Param name="name" val="fixation" valType="code"/>
+        <Param name="text" val="+" valType="str"/>
+        <Param name="letterHeight" val="0.2" valType="num"/>
+        <Param name="startVal" val="0" valType="code"/>
+        <Param name="stopType" val="duration (s)" valType="str"/>
+        <Param name="stopVal" val="0.5" valType="code"/>
+      </TextComponent>
+      <TextComponent name="stimulus" plugin="None">
+        <Param name="name" val="stimulus" valType="code"/>
+        <Param name="text" val="GO!" valType="str"/>
+        <Param name="color" val="green" valType="color"/>
+        <Param name="letterHeight" val="0.2" valType="num"/>
+        <Param name="startType" val="time (s)" valType="str"/>
+        <Param name="startVal" val="1 + random()" valType="code"/>
+        <Param name="stopType" val="duration (s)" valType="str"/>
+        <Param name="stopVal" val="10" valType="code"/>
+        <Param name="startEstim" val="1.5" valType="code"/>
+        <Param name="durationEstim" val="10" valType="code"/>
+      </TextComponent>
+      <KeyboardComponent name="response" plugin="None">
+        <Param name="name" val="response" valType="code"/>
+        <Param name="allowedKeys" val="['space']" valType="list"/>
+        <Param name="store" val="last key" valType="str"/>
+        <Param name="startType" val="time (s)" valType="str"/>
+        <Param name="startVal" val="-1" valType="code"/>
+        <Param name="stopType" val="duration (s)" valType="str"/>
+        <Param name="stopVal" val="10" valType="code"/>
+        <Param name="forceEndRoutine" val="True" valType="bool"/>
+        <Param name="startEstim" val="1.5" valType="code"/>
+        <Param name="durationEstim" val="10" valType="code"/>
+      </KeyboardComponent>
+      <CodeComponent name="storeRT" plugin="None">
+        <Param name="name" val="storeRT" valType="code"/>
+        <Param name="End JS Routine" val="if (!psychoJS.experiment.allRTs) psychoJS.experiment.allRTs = [];&#10;if (response.rt != null) psychoJS.experiment.allRTs.push(response.rt);" valType="code"/>
+      </CodeComponent>
+    </Routine>
+    <Routine name="results">
+      <RoutineSettingsComponent name="results" plugin="None">
+        <Param name="name" val="results" valType="code"/>
+      </RoutineSettingsComponent>
+      <CodeComponent name="calcResults" plugin="None">
+        <Param name="name" val="calcResults" valType="code"/>
+        <Param name="Begin JS Routine" val="let rts = psychoJS.experiment.allRTs || [];&#10;let meanRT = rts.length ? Math.round(rts.reduce((a, b) =&gt; a + b, 0) / rts.length) : 0;&#10;resultsText.setText('Your average reaction time was ' + meanRT + ' ms');" valType="code"/>
+      </CodeComponent>
+      <TextComponent name="resultsText" plugin="None">
+        <Param name="name" val="resultsText" valType="code"/>
+        <Param name="text" val="Calculating your results..." valType="str"/>
+        <Param name="letterHeight" val="0.08" valType="num"/>
+        <Param name="startVal" val="0" valType="code"/>
+        <Param name="stopType" val="duration (s)" valType="str"/>
+        <Param name="stopVal" val="100" valType="code"/>
+      </TextComponent>
+      <KeyboardComponent name="endKey" plugin="None">
+        <Param name="name" val="endKey" valType="code"/>
+        <Param name="allowedKeys" val="['space']" valType="list"/>
+        <Param name="store" val="nothing" valType="str"/>
+        <Param name="startVal" val="0" valType="code"/>
+        <Param name="stopType" val="duration (s)" valType="str"/>
+        <Param name="stopVal" val="100" valType="code"/>
+        <Param name="forceEndRoutine" val="True" valType="bool"/>
+      </KeyboardComponent>
+    </Routine>
+  </Routines>
+  <Flow>
+    <Routine name="welcome"/>
+    <LoopInitiator name="trials" plugin="None" loopType="TrialHandler">
+      <Param name="name" val="trials" valType="code"/>
+      <Param name="loopType" val="random" valType="str"/>
+      <Param name="nReps" val="8" valType="code"/>
+    </LoopInitiator>
+    <Routine name="trial"/>
+    <LoopTerminator name="trials"/>
+    <Routine name="results"/>
+  </Flow>
+</PsychoPy2experiment>
