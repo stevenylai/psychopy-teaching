@@ -6,7 +6,7 @@ from typing import Any
 from argparse import Namespace
 
 def encode_profile_value(value) -> str:
-    if isinstance(value, str):
+    if isinstance(value, (str, Path)):
         return str(value)
     raise TypeError(f"Unsupported profile value: {type(value).__name__}")
 
