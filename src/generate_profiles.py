@@ -11,7 +11,7 @@ def encode_profile_value(value) -> str:
     raise TypeError(f"Unsupported profile value: {type(value).__name__}")
 
 def generate_profiles(output_path) -> Path:
-    from psychopy import version
+    from psychopy import __version__
     from psychopy.experiment import (
         getDeviceProfiles,
         getElementProfiles,
@@ -19,7 +19,7 @@ def generate_profiles(output_path) -> Path:
     )
 
     snapshot: dict[str, Any] = {
-        "metadata": {"psychopyVersion": version, "schemaVersion": 1},
+        "metadata": {"psychopyVersion": __version__, "schemaVersion": 1},
         "components": getElementProfiles(),
         "loops": getLoopProfiles(),
         "devices": getDeviceProfiles(),
